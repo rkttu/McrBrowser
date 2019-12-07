@@ -1,0 +1,40 @@
+﻿@page "/windows/servercore"
+
+@using McrBrowser.Data
+@inject McrDataService dataService
+
+<h1>Image Tag List</h1>
+
+@if (data == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image Name</th>
+                <th>Tag Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tagName in data.tags)
+            {
+                <tr>
+                    <td>@data.name</td>
+                    <td>@tagName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private ImageTagData data;
+
+    protected override async Task OnInitializedAsync()
+    {
+        data = await dataService.GetTagListAsync("windows/servercore");
+    }
+}
